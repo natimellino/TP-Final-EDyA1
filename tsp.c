@@ -15,7 +15,8 @@ Ciudades crear_ciudades() {
 }
 
 void agregar_ciudad(Ciudades ciudades, char* ciudad) {
-  ciudades->nombres[ciudades->elems] = malloc(sizeof(char) * strlen(ciudad));
+  ciudades->nombres[ciudades->elems] =
+      malloc(sizeof(char) * (strlen(ciudad) + 1));
   strcpy(ciudades->nombres[ciudades->elems], ciudad);
   ciudades->elems++;
 }
@@ -90,8 +91,8 @@ int** leer_entrada(char* archivo, Ciudades ciudades) {
     matrizCostos[index1][index2] = costo;
     matrizCostos[index2][index1] = costo;
   }
-  return matrizCostos;
   fclose(fp);
+  return matrizCostos;
 }
 
 void escribir_solucion(char* archivo, int solucion[], Ciudades ciudades,

@@ -5,7 +5,9 @@ Alumno: Natalia Mellino.
 Características del código:
 
 -) Compilación y ejecución: para compilar utilizamos el comando: gcc -std=c99 -Wall -pedantic  main.c tsp.c
-luego para ejecutar simplemente escribimos: ./a.out.
+luego para ejecutar simplemente escribimos: ./a.out archivoEntrada archivoSalida.
+Los nombres del archivo de entrada y archivo de salida no deben contener la extensión '.txt' y su longitud no debe superar los
+25 caracteres.
 
 -) Estructuras elegidas para almacenar los datos:
 

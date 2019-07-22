@@ -7,6 +7,25 @@
 #define MAX_ARR 20
 #define MAX_CAD 30
 
+// Algoritmo que resuelve el problema del viajante. Recibe:
+
+// -La matriz de costos,
+// -Dos arreglos de enteros: 'mejorSol' y 'solParcial' donde se guardan la mejor
+// solución hasta el momento y la solución que estoy explorando.
+// (respectivamente).
+// -Dos punteros a int donde se almacena el costo de la mejor solución y el de
+// la solución actual.
+// -Arreglo de visitados: consiste en un arreglo de enteros donde se marcan con
+// 1 las ciudades que ya fueron visitadas y 0 las que no lo fueron. Para saber
+// si una ciudad fue visitada o no, basta consultar si el arreglo de visitados
+// en el índice correspondiente a la ciudad es un 0 o un 1. Por ejemplo, si mi
+// arreglo de ciudades es: {a,b,c,d}, y quiero saber si b ya fue visitada, basta
+// con preguntar si visitados[1] es igual a 1. (1 es el índice que ocupa b en el
+// arreglo de ciudades).
+// -Dos enteros que representan: uno la cantidad de ciudadades, otro la ciudad
+// actual en la que estoy (posActual) y uno que indica cuantas ciudades llevo
+// recorriendo ya (nivel).
+
 void resolver_tsp(int** matriz, int visitados[], int solParcial[],
                   int mejorSol[], int* costoMejor, int* costoParcial, int nivel,
                   int cantCiudades, int posActual) {
@@ -39,7 +58,7 @@ void resolver_tsp(int** matriz, int visitados[], int solParcial[],
           resolver_tsp(matriz, visitados, solParcial, mejorSol, costoMejor,
                        costoParcial, nivel + 1, cantCiudades, i);
           // Desmarco como visitada la casilla para seguir buscando una solución
-          // mejor en la siguiente ciudad.
+          // mejor (si es que hay) en la siguiente ciudad.
           visitados[i] = 0;
           *(costoParcial) -= matriz[posActual][i];
         }
@@ -47,6 +66,9 @@ void resolver_tsp(int** matriz, int visitados[], int solParcial[],
     }
   }
 }
+
+// Llamamos a la función que resuelve el tsp para el mapa dado y escribimos su
+// solución en un archivo.
 
 void tsp(Ciudades listaCiudades, int** matrizCostos, char* archivoSalida) {
   int visitados[listaCiudades->elems], solParcial[listaCiudades->elems + 1],
@@ -87,18 +109,15 @@ void tsp(Ciudades listaCiudades, int** matrizCostos, char* archivoSalida) {
   printf("Archivo de salida generado.\n");
 }
 
-int main() {
+int main(int argc, char* argv[]) {
   int** matrizCostos;
   Ciudades ciudades = crear_ciudades();
-  char entrada[30], salida[30];
-  // Pedimos los nombres de los archivos de entrada y salida, y guardamos los
-  // datos.
-  printf("Ingrese el nombre del archivo de entrada:\n");
-  scanf("%s", entrada);
+  char entrada[MAX_CAD], salida[MAX_CAD];
+  strcpy(entrada, argv[1]);
+  strcpy(salida, argv[2]);
   strcat(entrada, ".txt");
-  printf("Ingrese el nombre del archivo de salida:\n");
-  scanf("%s", salida);
   strcat(salida, ".txt");
+  // Leemos el archivo de entrada y guardamos las ciudades y costos.
   matrizCostos = leer_entrada(entrada, ciudades);
   // Resolvemos el TSP y liberamos la memoria utilizada.
   tsp(ciudades, matrizCostos, salida);
