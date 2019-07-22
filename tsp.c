@@ -54,7 +54,7 @@ void imprimir_matriz(int** matriz, int elems) {
 int** leer_entrada(char* archivo, Ciudades ciudades) {
   FILE* fp = fopen(archivo, "r");
   assert(fp != NULL);
-  char c, cadena[MAX_CAD], c1[MAX_CAD], c2[MAX_CAD], p1[MAX_CAD], p2[MAX_CAD];
+  char c, cadena[MAX_CAD], c1[MAX_CAD], c2[MAX_CAD];
   ;
   int linea = 1, i = 0, costo, index1, index2, cantCiudades;
 
@@ -88,10 +88,8 @@ int** leer_entrada(char* archivo, Ciudades ciudades) {
   // Almaceno en la matriz los costos de las ciudades.
 
   while (fscanf(fp, "%[^,],%[^,],%d\n", c1, c2, &costo) != EOF) {
-    strcpy(p1, c1);
-    strcpy(p2, c2);
-    index1 = buscar_index(ciudades, p1);
-    index2 = buscar_index(ciudades, p2);
+    index1 = buscar_index(ciudades, c1);
+    index2 = buscar_index(ciudades, c2);
     if (index1 < cantCiudades && index2 < cantCiudades) {
       matrizCostos[index1][index2] = costo;
       matrizCostos[index2][index1] = costo;
