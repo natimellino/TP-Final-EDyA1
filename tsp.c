@@ -7,6 +7,8 @@
 #define MAX_ARR 20
 #define MAX_CAD 30
 
+/* Funciones asociadas a la estructura Ciudades. */
+
 Ciudades crear_ciudades() {
   Ciudades nuevo = malloc(sizeof(struct _Ciudades));
   nuevo->nombres = malloc(sizeof(char*) * MAX_ARR);
@@ -35,6 +37,8 @@ int buscar_index(Ciudades ciudades, char* nombre) {
   }
   return index;
 }
+
+/* Imprime una matriz de enteros. */
 
 void imprimir_matriz(int** matriz, int elems) {
   for (int i = 0; i < elems; i++) {
@@ -88,8 +92,10 @@ int** leer_entrada(char* archivo, Ciudades ciudades) {
     strcpy(p2, c2);
     index1 = buscar_index(ciudades, p1);
     index2 = buscar_index(ciudades, p2);
-    matrizCostos[index1][index2] = costo;
-    matrizCostos[index2][index1] = costo;
+    if (index1 < cantCiudades && index2 < cantCiudades) {
+      matrizCostos[index1][index2] = costo;
+      matrizCostos[index2][index1] = costo;
+    }
   }
   fclose(fp);
   return matrizCostos;
