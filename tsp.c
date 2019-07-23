@@ -38,6 +38,19 @@ int buscar_index(Ciudades ciudades, char* nombre) {
   return index;
 }
 
+/* Crea una matriz de enteros. */
+
+int** crear_matriz(int capacidad) {
+  int** matrizCostos = malloc(sizeof(int*) * capacidad);
+  for (int i = 0; i < capacidad; i++) {
+    matrizCostos[i] = malloc(sizeof(int) * capacidad);
+    for (int j = 0; j < capacidad; j++) {
+      matrizCostos[i][j] = -1;
+    }
+  }
+  return matrizCostos;
+}
+
 /* Imprime una matriz de enteros. */
 
 void imprimir_matriz(int** matriz, int elems) {
@@ -75,24 +88,22 @@ int** leer_entrada(char* archivo, Ciudades ciudades) {
   }
   cantCiudades = ciudades->elems;
 
-  // Creo la matriz de costos.  //ENCAPSULAR EN UNA FUNCION.
+  // Creo la matriz de costos.
+  int** matrizCostos;
 
-  int** matrizCostos = malloc(sizeof(int*) * cantCiudades);
-  for (int i = 0; i < cantCiudades; i++) {
-    matrizCostos[i] = malloc(sizeof(int) * cantCiudades);
-    for (int j = 0; j < cantCiudades; j++) {
-      matrizCostos[i][j] = -1;
-    }
-  }
+  if (cantCiudades > 1) {  // Si hay más de una ciudad almaceno los costos,
+                           // si no, no es necesario ya que no necesito la
+                           // matriz pues no debo devolver una solución.
 
-  // Almaceno en la matriz los costos de las ciudades.
+    matrizCostos = crear_matriz(cantCiudades);
 
-  while (fscanf(fp, "%[^,],%[^,],%d\n", c1, c2, &costo) != EOF) {
-    index1 = buscar_index(ciudades, c1);
-    index2 = buscar_index(ciudades, c2);
-    if (index1 < cantCiudades && index2 < cantCiudades) {
-      matrizCostos[index1][index2] = costo;
-      matrizCostos[index2][index1] = costo;
+    while (fscanf(fp, "%[^,],%[^,],%d\n", c1, c2, &costo) != EOF) {
+      index1 = buscar_index(ciudades, c1);
+      index2 = buscar_index(ciudades, c2);
+      if (index1 < cantCiudades && index2 < cantCiudades) {
+        matrizCostos[index1][index2] = costo;
+        matrizCostos[index2][index1] = costo;
+      }
     }
   }
   fclose(fp);
@@ -123,8 +134,12 @@ void destruir_ciudades(Ciudades ciudades) {
 }
 
 void destruir_matriz(int** matriz, int tam) {
-  for (int i = 0; i < tam; i++) {
-    free(matriz[i]);
+  if (tam > 1) {  // Pregunto si hay más de una ciudad ya que en caso de no ser
+                  // así la matriz no se llena y daría violación de segmento al
+                  // intentar destruirla.
+    for (int i = 0; i < tam; i++) {
+      free(matriz[i]);
+    }
+    free(matriz);
   }
-  free(matriz);
 }

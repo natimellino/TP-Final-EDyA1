@@ -24,6 +24,10 @@ void imprimir_ciudades(Ciudades ciudades);
 
 int buscar_index(Ciudades ciudades, char* nombre);
 
+/* Dado su tamaño crea una matriz de enteros. */
+
+int** crear_matriz(int capacidad);
+
 /* Dada una matriz, que representa la matriz de costos de las ciudades, la
  * imprime por pantalla. */
 

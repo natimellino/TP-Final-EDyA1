@@ -73,40 +73,45 @@ void resolver_tsp(int** matriz, int visitados[], int solParcial[],
 void tsp(Ciudades listaCiudades, int** matrizCostos, char* archivoSalida) {
   int visitados[listaCiudades->elems], solParcial[listaCiudades->elems + 1],
       mejorSol[listaCiudades->elems + 1];
+  if (listaCiudades->elems > 1) {
+    // Inicializamos el arreglo de ciudades visitadas y los arreglos donde
+    // guardaremos la solución parcial y la mejor solución.
 
-  // Inicializamos el arreglo de ciudades visitadas y los arreglos donde
-  // guardaremos la solución parcial y la mejor solución.
+    for (int i = 0; i < listaCiudades->elems; i++) {
+      visitados[i] = 0;
+      mejorSol[i] = -1;
+      solParcial[i] = -1;
+    }
+    mejorSol[listaCiudades->elems] = -1;
+    solParcial[listaCiudades->elems] = -1;
 
-  for (int i = 0; i < listaCiudades->elems; i++) {
-    visitados[i] = 0;
-    mejorSol[i] = -1;
-    solParcial[i] = -1;
+    // Variables donde almacenamos el costo de la mejor solución y el costo de
+    // la solución parcial.
+
+    int *costoMejor, *costoParcial;  // PONER TODO EN UNO.
+    int cm = 0, cp = 0;
+    costoMejor = &cm;
+    costoParcial = &cp;
+
+    // Agrego el ínidce de la ciudad de inicio (tomamos arbritariamente la
+    // primera) y la marco como visitada.
+
+    visitados[0] = 1;
+    solParcial[0] = 0;
+
+    // Llamamos a la función que encuentra la solución y la escribimos en un
+    // archivo.
+
+    resolver_tsp(matrizCostos, visitados, solParcial, mejorSol, costoMejor,
+                 costoParcial, 1, listaCiudades->elems, 0);
+    escribir_solucion(archivoSalida, mejorSol, listaCiudades, matrizCostos,
+                      *(costoMejor));
+    printf("Archivo de salida generado.\n");
+  } else {
+    printf(
+        "El mapa no contiene la cantidad de ciudades necesarias\npara generar "
+        "un recorrido. Pruebe con otro mapa.\n");
   }
-  mejorSol[listaCiudades->elems] = -1;
-  solParcial[listaCiudades->elems] = -1;
-
-  // Variables donde almacenamos el costo de la mejor solución y el costo de la
-  // solución parcial.
-
-  int *costoMejor, *costoParcial;  // PONER TODO EN UNO.
-  int cm = 0, cp = 0;
-  costoMejor = &cm;
-  costoParcial = &cp;
-
-  // Agrego el ínidce de la ciudad de inicio (tomamos arbritariamente la
-  // primera) y la marco como visitada.
-
-  visitados[0] = 1;
-  solParcial[0] = 0;
-
-  // Llamamos a la función que encuentra la solución y la escribimos en un
-  // archivo.
-
-  resolver_tsp(matrizCostos, visitados, solParcial, mejorSol, costoMejor,
-               costoParcial, 1, listaCiudades->elems, 0);
-  escribir_solucion(archivoSalida, mejorSol, listaCiudades, matrizCostos,
-                    *(costoMejor));
-  printf("Archivo de salida generado.\n");
 }
 
 int main(int argc, char* argv[]) {
