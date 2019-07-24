@@ -88,8 +88,7 @@ void tsp(Ciudades listaCiudades, int** matrizCostos, char* archivoSalida) {
     // Variables donde almacenamos el costo de la mejor solución y el costo de
     // la solución parcial.
 
-    int *costoMejor, *costoParcial;  // PONER TODO EN UNO.
-    int cm = 0, cp = 0;
+    int *costoMejor, *costoParcial, cm = 0, cp = 0;
     costoMejor = &cm;
     costoParcial = &cp;
 

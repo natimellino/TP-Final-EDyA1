@@ -4,6 +4,17 @@ Alumno: Natalia Mellino.
 
 Características del código:
 
+-) Formato del archivo de entrada: el archivo de entrada debe ser de la siguiente forma:
+
+Ciudades:
+a, b, c
+Costos:
+a,b,3
+a,c,2
+b,c,1
+
+(Nótese que en la segunda línea los nombres de las ciudades están separados por comas seguidos inmediatamente de un espacio.)
+
 -) Compilación y ejecución: para compilar utilizamos el comando: gcc -std=c99 -Wall -pedantic  main.c tsp.c
 luego para ejecutar simplemente escribimos: ./a.out archivoEntrada archivoSalida.
 Los nombres del archivo de entrada y archivo de salida no deben contener la extensión '.txt' y su longitud no debe superar los
@@ -58,3 +69,15 @@ Si no terminé de recorrer todas las ciudades, empiezo a buscar un camino, desde
 llamando recursivamente a la función para recorrer todas las ciudades adyacentes a la ciudad en la que estoy actualmente,
 siempre y cuando la ciudad adyacente no haya sido visitada y el costo de la solución parcial no supere al costo de la mejor
 solución.
+
+-) Aclaración: 
+
+1) En el caso de que se pasen 1 o menos ciudades como entrada, el algoritmo no se ejecutará, es decir, no se
+devolvera solución alguna ya que: si hay 0 ciudades no hay camino alguno para devolver. Si hay 1 ciudad sola no existe
+alguna otra ciudad con la que esté conectada para generar un recorrido, por lo tanto, tampoco se devolverá una solución. 
+En el resto de los casos el algoritmo se ejecuta y devuelve siempre un recorrido ya que en el enunciado del TP se asume
+que el problema siempre va a tener solución.
+
+2) En el código hay una variable 'MAX_ARR' utilizada para determinar el tamaño máximo para almacenar ciudades 
+(ya que se hace uso de arreglos), dicho tamaño es de 20, en el caso de que se deseen pasar mas ciudades se 
+deberá modificar dicha variable para evitar incovenientes.

@@ -45,7 +45,7 @@ int** crear_matriz(int capacidad) {
   for (int i = 0; i < capacidad; i++) {
     matrizCostos[i] = malloc(sizeof(int) * capacidad);
     for (int j = 0; j < capacidad; j++) {
-      matrizCostos[i][j] = -1;
+      matrizCostos[i][j] = 0;
     }
   }
   return matrizCostos;
