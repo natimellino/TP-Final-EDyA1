@@ -6,9 +6,9 @@ Características del código:
 
 -) Formato del archivo de entrada: el archivo de entrada debe ser de la siguiente forma:
 
-Ciudades:
+Ciudades
 a, b, c
-Costos:
+Costos
 a,b,3
 a,c,2
 b,c,1

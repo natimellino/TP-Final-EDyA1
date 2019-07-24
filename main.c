@@ -114,18 +114,24 @@ void tsp(Ciudades listaCiudades, int** matrizCostos, char* archivoSalida) {
 }
 
 int main(int argc, char* argv[]) {
-  int** matrizCostos;
-  Ciudades ciudades = crear_ciudades();
-  char entrada[MAX_CAD], salida[MAX_CAD];
-  strcpy(entrada, argv[1]);
-  strcpy(salida, argv[2]);
-  strcat(entrada, ".txt");
-  strcat(salida, ".txt");
-  // Leemos el archivo de entrada y guardamos las ciudades y costos.
-  matrizCostos = leer_entrada(entrada, ciudades);
-  // Resolvemos el TSP y liberamos la memoria utilizada.
-  tsp(ciudades, matrizCostos, salida);
-  destruir_matriz(matrizCostos, ciudades->elems);
-  destruir_ciudades(ciudades);
+  if (argc == 3) {
+    int** matrizCostos;
+    Ciudades ciudades = crear_ciudades();
+    char entrada[MAX_CAD], salida[MAX_CAD];
+    strcpy(entrada, argv[1]);
+    strcpy(salida, argv[2]);
+    strcat(entrada, ".txt");
+    strcat(salida, ".txt");
+    // Leemos el archivo de entrada y guardamos las ciudades y costos.
+    matrizCostos = leer_entrada(entrada, ciudades);
+    // Resolvemos el TSP y liberamos la memoria utilizada.
+    tsp(ciudades, matrizCostos, salida);
+    destruir_matriz(matrizCostos, ciudades->elems);
+    destruir_ciudades(ciudades);
+  } else {
+    printf(
+        "Asegurese de estar ingresando los nombres de los archivos\nde "
+        "entrada y salida y vuelva a intentar.\n");
+  }
   return 0;
 }

@@ -84,7 +84,7 @@ int** leer_entrada(char* archivo, Ciudades ciudades) {
         i++;
       }
     }
-    if (c == '\n') linea++;
+    if (c == '\n' || c == '\r') linea++;
   }
   cantCiudades = ciudades->elems;
 
